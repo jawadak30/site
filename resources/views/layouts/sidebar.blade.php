@@ -26,29 +26,29 @@
         <li class="menu-item">
             <a href="{{ url('buku') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-book-open"></i>
-                <div data-i18n="Analytics">Buku</div>
+                <div data-i18n="Analytics">books</div>
             </a>
         </li>
 
-        @if (auth()->user()->role == 'Admin')
+        @if (auth()->user()->isAdmin())
             <!-- kategori -->
             <li class="menu-item">
                 <a href="{{ url('kategori') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-collection"></i>
-                    <div data-i18n="Layouts">Kategori</div>
+                    <div data-i18n="Layouts">categories</div>
                 </a>
             </li>
         @endif
 
-        @if (auth()->user()->role == 'Admin')
+        @if (auth()->user()->isAdmin())
             <!-- User/Profile -->
             <li class="menu-item">
                 <a href="{{ url('user') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
-                    <div data-i18n="Layouts">User</div>
+                    <div data-i18n="Layouts">Users</div>
                 </a>
             </li>
-        @elseif (auth()->user()->role == 'user')
+        @elseif (auth()->user()->isUser())
             <!-- User/Profile -->
             <li class="menu-item">
                 <a href="" class="menu-link">

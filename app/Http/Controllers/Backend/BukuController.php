@@ -2,27 +2,25 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\Buku;
-use App\Models\Kategori;
-use Illuminate\Http\Request;
-use App\Http\Requests\BookRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\BookRequest;
 use App\Http\Requests\BookUpdateRequest;
+use App\Models\Buku;
+use App\Models\Categorie;
+use App\Models\Kategori;
+use App\Models\Livre;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class BukuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): View
     {
-        return view('backend.buku.buku', [
-            'bukus' => Buku::with('Kategori')->latest()->paginate(5),
-            'kategoris' => Kategori::get()
-        ]); //with buku maksudnya refer to relasi fungsi buku di model buku
+        $categories = Categorie::select('id', 'name')->get();
+        $books = Livre::with('categorie:id,name')->latest()->paginate(10);
+        return view('backend.buku.buku', compact('books','categories'));
     }
 
     /**
@@ -30,23 +28,18 @@ class BukuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('backend.buku.create', [
-            'kategoris' => Kategori::get(),
-            'bukus' => Buku::get()
-        ]);
-    }
+    // public function create()
+    // {
+    //     return view('backend.buku.create', [
+    //         'kategoris' => Kategori::get(),
+    //         'bukus' => Buku::get()
+    //     ]);
+    // }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(BookRequest $request)
     {
-        // return "ok";
+
         $data = $request->validated();
         $file = $request->file('cover');
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
@@ -59,12 +52,7 @@ class BukuController extends Controller
         return redirect(url('buku'))->with('success', 'Data berhasil ditambah');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(string $id)
     {
         return view('backend.buku.buku', [
@@ -72,14 +60,7 @@ class BukuController extends Controller
             'kategoris' => Kategori::get()
         ]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+        public function edit($id)
     {
         return view('backend.buku.buku', [
             'v_bukus' => Buku::find($id),
@@ -87,41 +68,57 @@ class BukuController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(BookUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->validated();
+        // Validate the incoming request
+        $validated = $request->validate([
+            'titre' => 'required|string|max:255', // Title
+            'categorie_id' => 'required|exists:categories,id', // Category (make sure you have a categories table)
+            'nbr_exemplaire' => 'required|integer|min:1', // Number of Copies
+            'status' => 'required|string|max:255', // Status
+            'date_edition' => 'required|date', // Publish Date
+            'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Cover image validation
+            'description' => 'nullable|string', // Description (optional)
+            'oldImg' => 'nullable|string', // For old image
+        ]);
 
-        if ($request->hasFile('cover')) {
-            $file = $request->file('cover');
+        // Check if there's a new file for the cover
+        if ($request->hasFile('image1')) {
+            $file = $request->file('image1');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/backend/', $filename);
-            //hapus gambar lama
-            Storage::delete('public/backend/' . $request->oldImg);
-            $data['cover'] = $filename;
+
+            // Delete the old image if it's not the same as the new one
+            if ($request->oldImg && $request->oldImg !== $filename) {
+                Storage::delete('public/backend/' . $request->oldImg);
+            }
+
+            // Update the image in the data
+            $validated['image1'] = $filename;
         } else {
-            $data['cover'] = $request->oldImg;
+            // If no new image, keep the old one
+            $validated['image1'] = $request->oldImg;
         }
 
-        Buku::find($id)->update($data);
-        return redirect(url('buku'))->with('success', 'Data berhasil diubah');
+        // Update the Livre model
+        Livre::find($id)->update($validated);
+
+        // Redirect with a success message
+        return back()->with('success', 'Book successfully updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        Buku::find($id)->delete();
-        return back()->with('success', 'Kategori berhasil dihapus');
+        $book = Livre::find($id);
+
+        if ($book) {
+            $book->delete();
+            return redirect()->back()->with('success', 'Book successfully deleted');
+        }
+
+        return redirect()->back()->with('error', 'Book not found');
     }
+
+
 }

@@ -28,27 +28,29 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Nomor</th>
-                        <th>Kategori</th>
-                        <th>Date Add</th>
+                        <th>number</th>
+                        <th>Category Name</th> <!-- Changed 'Kategori' to 'Category Name' -->
+                        <th>Description</th> <!-- Added Description column -->
+                        <th>Date Added</th> <!-- Changed 'Date Add' to 'Date Added' -->
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($kategoris as $item)
+                    @foreach ($categories as $item)
                         <tr>
                             <td>
                                 <i class="fab fa-bootstrap fa-lg text-primary me-3"></i>
                                 <strong>{{ $loop->iteration }}</strong>
                             </td>
-                            <td>{{ $item->kategori }}</td>
-                            <td><span class="">{{ $item->created_at }}</span></td>
+                            <td>{{ $item->name }}</td> <!-- Displaying the 'name' field -->
+                            <td>{{ $item->description }}</td> <!-- Displaying the 'description' field -->
+                            <td><span class="">{{ $item->created_at }}</span></td> <!-- Displaying the 'created_at' field -->
                             <td>
-                                <button type="button" class="btn btn-sm btn-outline-success bx bx-edit-alt "
+                                <button type="button" class="btn btn-sm btn-outline-success bx bx-edit-alt"
                                     data-bs-toggle="modal" data-bs-target="#modalCenterUpdate{{ $item->id }}">
                                     Edit
                                 </button>
-                                <button type="button" class="btn btn-sm btn-outline-danger bx bx-trash "
+                                <button type="button" class="btn btn-sm btn-outline-danger bx bx-trash"
                                     data-bs-toggle="modal" data-bs-target="#modalCenterDelete{{ $item->id }}">
                                     Delete
                                 </button>
@@ -57,6 +59,12 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <!-- Add pagination controls -->
+            <div class="pagination">
+                {{ $categories->links() }}
+            </div>
+
         </div>
     </div>
     <!--/ Hoverable Table rows -->

@@ -50,35 +50,34 @@
                         Books<span></span></p>
                 </div>
 
-                <div class="row portfolio-container">
-                    @foreach ($latest_posts as $item)
-                        <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="rounded overflow-hidden">
-                                <div class="position-relative overflow-hidden">
-                                    <img class="img-fluid" src="{{ asset('storage/backend/' . $item->cover) }}"
-                                        alt="">
-                                    <div class="portfolio-overlay">
-                                        <a class="btn btn-square btn-outline-light mx-1"
-                                            href="{{ asset('storage/backend/' . $item->cover) }}"
-                                            data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                    </div>
-                                </div>
-                                <div class="bg-light p-4">
-                                    <p class="text-primary fw-medium mb-2">{{ $item->kategori->kategori }}</p>
-                                    <h5 class="lh-base mb-0">{{ $item->judul }}</h5>
-                                    <a href="{{ url('library') }}"
-                                        class="btn btn-primary py-sm-3 px-sm-5 rounded-pill mt-3">
-                                        Borrow</a>
+                <div class="row portfolio-container" style="row-gap: 20px">
+                    @foreach ($livres as $item)
+                    <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s" >
+                        <div class="rounded overflow-hidden">
+                            <div class="position-relative overflow-hidden" style="height: 300px">
+                                <img class="img-fluid" src="{{ asset('storage/' . $item->image1) }}" alt="">
+                                <div class="portfolio-overlay">
+                                    <a class="btn btn-square btn-outline-light mx-1"
+                                        href="{{ asset('storage/' . $item->image1) }}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
                                 </div>
                             </div>
+                            <div class="bg-light p-4">
+                                <p class="text-primary fw-medium mb-2">{{ $item->categorie->name }}</p> <!-- Assuming the relationship is 'categorie' -->
+                                <h5 class="lh-base mb-0">{{ $item->title }}</h5> <!-- Assuming 'title' as a property for book name -->
+                                <a href="{{ url('library') }}"
+                                    class="btn btn-primary py-sm-3 px-sm-5 rounded-pill mt-3">
+                                    Borrow</a>
+                            </div>
                         </div>
-                    @endforeach
+                    </div>
+                @endforeach
+
                 </div>
                 {{-- paginate --}}
                 <hr>
                 <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="col-12 text-center">
-                        {{ $latest_posts->links() }}
+                        {{ $livres->links() }}
                     </div>
                 </div>
                 {{-- end paginate --}}

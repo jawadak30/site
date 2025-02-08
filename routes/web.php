@@ -50,3 +50,17 @@ Route::middleware('auth')->group(function () {
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware('auth')->group(function() {
+    // My Profile
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+
+    // Settings
+    Route::get('/settings', [UserController::class, 'settings'])->name('settings');
+
+    // Update profile (to update the profile details)
+    Route::put('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+
+    // Update settings (to update the settings like password)
+    Route::put('/settings/update', [UserController::class, 'updateSettings'])->name('settings.update');
+});

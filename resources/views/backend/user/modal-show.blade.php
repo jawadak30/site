@@ -9,7 +9,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label" for="name">Nama</label>
+                            <label class="form-label" for="name">name</label>
                             <input type="text" name="name" class="form-control" id="name"
                                 value="{{ $item->name }}" disabled />
                         </div>

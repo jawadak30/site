@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categorie;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 
@@ -11,59 +12,69 @@ class KategoriController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+
+
+
      */
     public function index()
     {
-        return view('backend.kategori.kategori', [
-            'kategoris' => Kategori::orderBy('kategori')->get()
-        ]);
+        $categories = Categorie::paginate(10); // 10 is the number of items per page
+
+        return response()->view('backend.kategori.kategori', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
+        // Validate the input
         $data = $request->validate([
-            'kategori' => 'required|min:2'
+            'name' => 'required|min:2|max:255' // Matching the field name and validation rule
         ]);
 
-        Kategori::create($data);
+        // Create a new category
+        Categorie::create($data);
 
-        return back()->with('success', 'Kategori baru telah terbuat');
+        // Redirect back with success message
+        return back()->with('success', 'New category has been created');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
+        // Validate the input
         $data = $request->validate([
-            'kategori' => 'required|min:2'
+            'name' => 'required|min:2|max:255', // 'name' matches the field in your 'categories' table // 'description' is optional, but with a limit on length
         ]);
 
-        Kategori::find($id)->update($data);
+        // Find the category by ID and update it
+        $category = Categorie::find($id);
+        if ($category) {
+            $category->update($data);
 
-        return back()->with('success', 'Kategori baru telah terubah');
+            // Redirect back with a success message
+            return back()->with('success', 'Category has been updated successfully');
+        }
+
+        // If the category is not found
+        return back()->with('error', 'Category not found');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function destroy($id)
     {
-        Kategori::find($id)->delete();
-        return back()->with('success', 'Kategori berhasil dihapus');
+        // Find the category by ID
+        $category = Categorie::find($id);
+
+        if ($category) {
+            // Soft delete the category
+            $category->delete();
+
+            // Redirect back with a success message
+            return back()->with('success', 'Category has been deleted successfully');
+        }
+
+        // If category not found, return with an error message
+        return back()->with('error', 'Category not found');
     }
+
 }

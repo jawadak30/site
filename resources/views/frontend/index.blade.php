@@ -99,27 +99,29 @@
             <h1 class="text-center mb-5">Here is our newest books on our library😊</h1>
         </div>
         <div class="row g-4 portfolio-container">
-            @foreach ($latest_post as $item)
-                <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="rounded overflow-hidden">
-                        <div class="position-relative overflow-hidden">
-                            <img class="img-fluid" src="{{ asset('storage/backend/' . $item->cover) }}" alt="">
-                            <div class="portfolio-overlay">
-                                <a class="btn btn-square btn-outline-light mx-1"
-                                    href="{{ asset('storage/backend/' . $item->cover) }}" data-lightbox="portfolio"><i
-                                        class="fa fa-eye"></i></a>
-                                <a class="btn btn-square btn-outline-light mx-1" href="{{ url('library') }}"><i
-                                        class="fa fa-paper-plane"></i></a>
-                            </div>
-                        </div>
-                        <div class="bg-light p-4">
-                            <p class="text-primary fw-medium mb-2">{{ $item->kategori->kategori }}</p>
-                            <h5 class="lh-base mb-0">{{ $item->judul }}</a>
+            @foreach ($livres as $item)
+            <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
+                <div class="rounded overflow-hidden">
+                    <div class="position-relative overflow-hidden" style="width: 310px; height: 400px;">
+                        <img class="img-fluid" src="{{ asset('storage/' . $item->image1) }}" alt="">
+                        <div class="portfolio-overlay">
+                            <a class="btn btn-square btn-outline-light mx-1"
+                                href="{{ asset('storage/' . $item->image1) }}" data-lightbox="portfolio"><i
+                                    class="fa fa-eye"></i></a>
+                            <a class="btn btn-square btn-outline-light mx-1" href="{{ url('library') }}"><i
+                                    class="fa fa-paper-plane"></i></a>
                         </div>
                     </div>
+                    <div class="bg-light p-4">
+                        <p class="text-primary fw-medium mb-2">{{ $item->categorie->name }}</p>
+                        <h5 class="lh-base mb-0">{{ $item->titre }}</h5>
+                    </div>
                 </div>
-            @endforeach
-
+            </div>
+        @endforeach
+        <div class="d-flex justify-content-center mt-4" style="bottom:-100px; position: absolute;">
+            {{ $livres->links() }}
+        </div>
         </div>
     </div>
     <!-- Projects End -->

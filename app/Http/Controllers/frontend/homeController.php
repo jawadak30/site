@@ -4,7 +4,9 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Buku;
+use App\Models\Categorie;
 use App\Models\Kategori;
+use App\Models\Livre;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,24 +14,17 @@ class homeController extends Controller
 {
     public function index()
     {
-        $bookcount = Buku::count();
-        $categorycount = Kategori::count();
+        $bookcount = Livre::count();
+        $categorycount = Categorie::count();
         $usercount = User::count();
-        return view('frontend.index', [
-            'latest_post' => Buku::latest()->paginate(6),
-            'img_footer' => Buku::latest()->paginate(6),
-            'bookcount' => $bookcount,
-            'categorycount' => $categorycount,
-            'usercount' => $usercount
-        ]);
+        $livres = Livre::with('categorie')->paginate(9);
+        return view('frontend.index', compact('livres','bookcount','categorycount','usercount'));
     }
 
     public function library()
     {
-        return view('frontend.library', [
-            'latest_posts' => Buku::latest()->paginate(6),
-            'img_footer' => Buku::latest()->paginate(6)
-        ]);
+        $livres = Livre::with('categorie')->paginate(9);
+        return view('frontend.library', compact('livres'));
     }
 
     public function footer()

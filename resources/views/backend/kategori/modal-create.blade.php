@@ -22,7 +22,7 @@
                 id="kategori"
                 class="form-control"
                 placeholder="Enter Category"
-                name="kategori"
+                name="name"
               />
             </div>
           </div>

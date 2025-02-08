@@ -24,13 +24,14 @@
                     <div class="container-xxl flex-grow-1 container-p-y">
 
                         {{-- @yield('DashboardBuku') --}}
-                        <h4 class="fw-bold py-3 mb-4">Dashboard Buku</h4>
+                        <h4 class="fw-bold py-3 mb-4">Dashboard</h4>
                         @yield('content')
                     </div>
                     <!-- / Content -->
 
                     <!-- Footer -->
                     @include('layouts.footer')
+                    {{-- @include('backend.buku.create') --}}
                     @include('backend.buku.modal-show')
                     @include('backend.buku.modal-delete-book')
                     @include('backend.buku.modal-update-book')

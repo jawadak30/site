@@ -25,12 +25,12 @@
                 <div class="col-md-6 col-lg-3">
                     <p class="section-title text-white h5 mb-4">Gallery<span></span></p>
                     <div class="row g-2">
-                        @foreach ($img_footer as $item)
+                        {{-- @foreach ($img_footer as $item)
                             <div class="col-4">
                                 <img class="img-fluid" src="{{ asset('storage/backend/' . $item->cover) }}"
                                     alt="Image">
                             </div>
-                        @endforeach
+                        @endforeach --}}
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-3">

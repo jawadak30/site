@@ -1,4 +1,4 @@
-@foreach ($kategoris as $item)
+@foreach ($categories as $item)
     <div class="modal fade" id="modalCenterUpdate{{ $item->id }}" tabindex="-1" aria-hidden="true">
         <form action="{{ url('kategori/' . $item->id) }}" method="post">
             @method('PUT')
@@ -14,7 +14,7 @@
                             <div class="col mb-3">
                                 <label for="kategori" class="form-label">Kategori</label>
                                 <input type="text" id="kategori" class="form-control" placeholder="Enter Category"
-                                    name="kategori" value="{{ old('kategori', $item->kategori) }}" />
+                                    name="name" value="{{ old('kategori', $item->kategori) }}" />
                             </div>
                         </div>
                         <div class="row g-2">

@@ -27,7 +27,7 @@
 
                         @yield('content')
                         @include('backend.user.modal-show')
-                        @include('backend.user.modal-create')
+                        {{-- @include('backend.user.modal-create') --}}
                         @include('backend.user.modal-update')
                         @include('backend.user.modal-delete')
 

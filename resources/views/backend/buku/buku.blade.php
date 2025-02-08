@@ -7,6 +7,8 @@
 @section('content')
     <!-- Hoverable Table rows -->
     <div class="card">
+        {{-- <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal" data-bs-target="#addBookModal">Add
+            book</button> --}}
         <div class="card-body">
             @if (auth()->user()->role == 'Admin')
                 <a href="{{ url('buku/create') }}" type="button" class="btn rounded-pill btn-primary">Add Book</a>
@@ -31,43 +33,40 @@
             <table class="table table-hover" id="dataTables">
                 <thead>
                     <tr>
-                        <th>Nomor</th>
-                        <th>Judul</th>
-                        <th>Kategori</th>
-                        <th>Cover</th>
-                        <th>Deskripsi</th>
-                        <th>Date Add</th>
+                        <th>ID</th>
+                        <th>Titre</th>
+                        <th>Category</th>
+                        <th>Image 1</th>
+                        <th>Description</th>
+                        <th>Date Added</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($bukus as $item)
+                    @foreach ($books as $item)
                         <tr>
                             <td>
                                 <i class="fab fa-bootstrap fa-lg text-primary me-3"></i>
                                 <strong>{{ $loop->iteration }}</strong>
                             </td>
-                            <td>{{ $item->judul }}</td>
-                            <td>{{ $item->Kategori->kategori }}</td>
-                            <td><img src="{{ asset('storage/backend/' . $item->cover) }}" alt="" width="75">
-                            </td>
-                            <td>{{ $item->deskripsi }}</td>
-                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->titre }}</td> <!-- Titre column -->
                             <td>
-                                <button type="button" class="btn btn-sm btn-outline-warning bx bx-info-circle "
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterShow{{ $item->id }}">
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-success bx bx-edit-alt "
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterUpdateBook{{ $item->id }}">
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-danger bx bx-trash "
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterDeleteBook{{ $item->id }}">
-                                </button>
+                                {{ $item->categorie ? $item->categorie->name : 'No Category' }}
+                            </td>
+
+                            <td><img src="{{ asset('storage/' . $item->image1) }}" alt="" width="75"></td> <!-- Image 1 -->
+                            <td>{{ $item->description }}</td> <!-- Description field -->
+                            <td>{{ $item->created_at }}</td> <!-- Created At (Date Added) -->
+                            <td>
+                                <button type="button" class="btn btn-sm btn-outline-warning bx bx-info-circle" data-bs-toggle="modal" data-bs-target="#modalCenterShow{{ $item->id }}"></button>
+                                <button type="button" class="btn btn-sm btn-outline-success bx bx-edit-alt" data-bs-toggle="modal" data-bs-target="#modalCenterUpdateBook{{ $item->id }}"></button>
+                                <button type="button" class="btn btn-sm btn-outline-danger bx bx-trash" data-bs-toggle="modal" data-bs-target="#modalCenterDeleteBook{{ $item->id }}"></button>
                             </td>
                         </tr>
                     @endforeach
-                    {{ $bukus->links() }}
+                    {{ $books->links() }}
                 </tbody>
             </table>
+
         </div>
     </div>
     <!--/ Hoverable Table rows -->

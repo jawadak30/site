@@ -8,8 +8,8 @@
     <!-- Hoverable Table rows -->
     <div class="card">
         <div class="card-body">
-            <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">Add
-                User</button>
+            {{-- <button type="button" class="btn rounded-pill btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">Add
+                User</button> --}}
 
             @if ($errors->any())
                 <div class="alert alert-primary alert-dismissible" role="alert">
@@ -33,48 +33,41 @@
             <table class="table table-hover" id="dataTables">
                 <thead>
                     <tr>
-                        <th>Nomor</th>
-                        <th>Nama</th>
+                        <th>Number</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Tanggal Buat</th>
-                        <th>Aksi</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody class="table-border-bottom-0">
+                <tbody>
                     @foreach ($users as $item)
                         <tr>
-                            <td>
-                                <i class="fab fa-bootstrap fa-lg text-primary me-3"></i>
-                                <strong>{{ $loop->iteration }}</strong>
-                            </td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->role }}</td>
                             <td>{{ $item->created_at }}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-outline-warning bx bx-info-circle "
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterShow{{ $item->id }}">
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-success bx bx-edit-alt "
-                                    data-bs-toggle="modal" data-bs-target="#modalCenterUpdateUser{{ $item->id }}">
-                                </button>
-                                @if (auth()->user()->role == 'Admin')
-                                    @if ($item->id != auth()->user()->id)
-                                        <button type="button" class="btn btn-sm btn-outline-danger bx bx-trash "
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalCenterDeleteUser{{ $item->id }}">
-                                        </button>
-                                    @endif
-                                @endif
+                                <!-- View Button -->
+                                <button type="button" class="btn btn-sm btn-outline-warning bx bx-info-circle" data-bs-toggle="modal" data-bs-target="#modalCenterShow{{ $item->id }}"></button>
 
+                                <!-- Edit Button -->
+                                <button type="button" class="btn btn-sm btn-outline-success bx bx-edit-alt" data-bs-toggle="modal" data-bs-target="#modalCenterUpdateUser{{ $item->id }}"></button>
+
+                                <!-- Delete Button (Admins only, excluding current user) -->
+                                @if (auth()->user()->role == 'Admin' && $item->id != auth()->user()->id)
+                                    <button type="button" class="btn btn-sm btn-outline-danger bx bx-trash" data-bs-toggle="modal" data-bs-target="#modalCenterDeleteUser{{ $item->id }}"></button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
-
-                    {{ $users->links() }}
                 </tbody>
             </table>
+
+            {{ $users->links() }}  <!-- Pagination links -->
+
         </div>
     </div>
     <!--/ Hoverable Table rows -->
