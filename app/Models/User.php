@@ -62,16 +62,6 @@ class User extends Authenticatable
         return $this->hasRole('user');
     }
 
-
-    public function redirectAuthUser(){
-        if ($this->isAdmin()) {
-            return redirect()->intended(route('admin_dashboard')); // Redirect to intended URL or admin dashboard
-        }
-
-        if ($this->isUser()) {
-            return redirect()->intended(route('welcome')); // Redirect to intended URL or welcome page
-        }
-    }
     public function profile(){
         $this->hasOne(Profile::class);
     }

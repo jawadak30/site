@@ -18,7 +18,12 @@
                         <a href="{{ url('') }}" class="nav-item nav-link">Home</a>
                         <a href="{{ url('library') }}" class="nav-item nav-link active">Library</a>
                     </div>
+                    @auth
+                    <a href="{{ url('dashboard') }}" class="btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block">dashboard</a>
+                    @endauth
+                    @guest
                     <a href="{{ url('login') }}" class="btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block">Login</a>
+                    @endguest
                 </div>
             </nav>
 
@@ -52,7 +57,7 @@
 
                 <div class="row portfolio-container" style="row-gap: 20px">
                     @foreach ($livres as $item)
-                    <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s" >
+                    <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
                         <div class="rounded overflow-hidden">
                             <div class="position-relative overflow-hidden" style="height: 300px">
                                 <img class="img-fluid" src="{{ asset('storage/' . $item->image1) }}" alt="">
@@ -62,15 +67,23 @@
                                 </div>
                             </div>
                             <div class="bg-light p-4">
-                                <p class="text-primary fw-medium mb-2">{{ $item->categorie->name }}</p> <!-- Assuming the relationship is 'categorie' -->
-                                <h5 class="lh-base mb-0">{{ $item->title }}</h5> <!-- Assuming 'title' as a property for book name -->
-                                <a href="{{ url('library') }}"
-                                    class="btn btn-primary py-sm-3 px-sm-5 rounded-pill mt-3">
-                                    Borrow</a>
+                                <p class="text-primary fw-medium mb-2">{{ $item->categorie->name }}</p>
+                                <h5 class="lh-base mb-0">{{ $item->title }}</h5>
+
+                                <!-- Reservation Form -->
+                                <form action="{{ route('reservations.store') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="livre_id" value="{{ $item->id }}">
+                                    <button type="submit" class="btn btn-primary py-sm-3 px-sm-5 rounded-pill mt-3">
+                                        Borrow
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
                 @endforeach
+
 
                 </div>
                 {{-- paginate --}}
@@ -85,7 +98,30 @@
         </div>
         <!-- Projects End -->
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+        @if(session('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Success!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
+            });
+        </script>
+    @endif
+
+
+    <script>
+        setTimeout(function () {
+            let alert = document.querySelector(".alert");
+            if (alert) {
+                alert.remove();
+            }
+        }, 5000); // Alert disappears after 5 seconds
+    </script>
 
 
         <!-- Footer Start -->

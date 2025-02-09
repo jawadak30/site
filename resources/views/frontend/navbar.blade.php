@@ -14,7 +14,12 @@
                         <a href="{{ url('library') }}" class="nav-item nav-link">Library</a>
                     </div>
                 </div>
+                @auth
+                    <a href="{{ url('dashboard') }}" class="btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block">dashboard</a>
+                @endauth
+                @guest
                 <a href="{{ url('login') }}" class="btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block">Login</a>
+                @endguest
 
             </nav>
         </div>

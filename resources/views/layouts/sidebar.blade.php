@@ -23,12 +23,23 @@
         </li>
 
         <!-- Buku -->
+        @if (auth()->user()->isUser())
+            <li class="menu-item">
+                <a href="{{ url('buku') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-book-open"></i>
+                    <div data-i18n="Analytics">reservations</div>
+                </a>
+            </li>
+        @endif
+        @if (auth()->user()->isAdmin())
+        <!-- kategori -->
         <li class="menu-item">
             <a href="{{ url('buku') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-book-open"></i>
                 <div data-i18n="Analytics">books</div>
             </a>
         </li>
+    @endif
 
         @if (auth()->user()->isAdmin())
             <!-- kategori -->
@@ -39,6 +50,15 @@
                 </a>
             </li>
         @endif
+        @if (auth()->user()->isAdmin())
+        <!-- kategori -->
+        <li class="menu-item">
+            <a href="{{ route('reservations.index')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Layouts">reservations</div>
+            </a>
+        </li>
+    @endif
 
         @if (auth()->user()->isAdmin())
             <!-- User/Profile -->
@@ -51,9 +71,15 @@
         @elseif (auth()->user()->isUser())
             <!-- User/Profile -->
             <li class="menu-item">
-                <a href="" class="menu-link">
+                <a href="{{ route('profile') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
                     <div data-i18n="Layouts">Profile</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ url('library') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <div data-i18n="Layouts">library</div>
                 </a>
             </li>
         @endif

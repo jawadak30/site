@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->date('dateEmprunt');
-            $table->time('heureEmprunt');
+            $table->date('dateEmprunt')->nullable();
+            $table->time('heureEmprunt')->nullable();
             $table->date('dateReservation');
             $table->enum('etat',['en attente', 'confirmée', 'annulée'])->default('en attente');
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();

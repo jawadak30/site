@@ -8,7 +8,11 @@
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center justify-content-between pb-0">
                     <div class="card-title mb-0">
+                        @if (auth()->user()->isAdmin())
                         <h5 class="m-0 me-2">Books Statistics</h5>
+                        @else
+                        <h5 class="m-0 me-2">reservations Statistics</h5>
+                        @endif
                     </div>
                     <div class="dropdown">
                         <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown"
@@ -24,10 +28,18 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
+                        @if (auth()->user()->isAdmin())
                         <div class="d-flex flex-column align-items-center gap-1">
                             <h2 class="mb-2">{{ $bookcount }}</h2>
                             <span>Total Books</span>
                         </div>
+                        @endif
+                        @if (auth()->user()->isUser())
+                        <div class="d-flex flex-column align-items-center gap-1">
+                            <h2 class="mb-2">{{ $bookcount }}</h2>
+                            <span>reservations</span>
+                        </div>
+                        @endif
                         <div id="orderStatisticsChart"></div>
                     </div>
                     <ul class="p-0 m-0">
@@ -38,7 +50,7 @@
                                         <div class="avatar ">
                                             {{-- <span class="avatar-initial rounded bg-label-primary"><i
                                                     class="bx bxs-book"></i></span> --}}
-                                            <img src="{{ asset('storage/backend/' . $item->cover) }}" alt="">
+                                            <img src="{{ asset('storage/' . $item->image1) }}" alt="">
                                         </div>
                                         <div class="">
                                             <h6 class="mb-0">{{ $item->judul }}</h6>
@@ -59,6 +71,7 @@
         <!--/ Books Statistics -->
 
         <!-- Categories Overview -->
+        @if (auth()->user()->isAdmin())
         <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center justify-content-between pb-0">
@@ -105,11 +118,13 @@
                                     </div>
                                 @endforeach
                             </div>
+
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
+        @endif
 
         <!--/ Categories Overview -->
 

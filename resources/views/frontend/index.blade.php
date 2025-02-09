@@ -21,8 +21,6 @@
                 <div class="row ">
                     <div class="col-lg-6 text-center text-lg-start">
                         <h1 class="text-white mb-4 animated slideInDown">Digital Library Management System</h1>
-                        <p class="text-white pb-3 animated slideInDown">Perpustakaan online yang akan memudahkan
-                            pekerjaanmu dimanapun dan kapanpun 😊</p>
                         <a href=""
                             class="btn btn-secondary py-sm-3 px-sm-5 rounded-pill me-3 animated slideInLeft">Search
                             Book</a>
@@ -46,11 +44,6 @@
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                 <p class="section-title text-secondary" id="about">About Us<span></span></p>
                 <h1 class="mb-5">#1 Digital Online Library Management System with any categories and any books</h1>
-                <p class="mb-4">
-                    ini merupakan satu-satunya sistem perpusatakaan online (digital) yang dibuat khusus untuk memudahkan
-                    kebutuhan dari pelajar dan pemuda di Indonesia. dengan hadirnya <i>Library Management System</i> ini
-                    diharapkan dapat mencerdaskan kehidupan bangsa
-                </p>
                 <a href="{{ url('library') }}" class="btn btn-primary py-sm-3 px-sm-5 rounded-pill mt-3">Go through with
                     us 😊</a>
             </div>

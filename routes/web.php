@@ -1,13 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\BukuController;
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\Backend\KategoriController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\frontend\homeController;
+use App\Http\Controllers\ReservationController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 // });
 Route::get('/login', function () {
     return view('auth.login');
-});
+})->name('login');
 Route::get('/', [homeController::class, 'index']);
 Route::get('/library', [homeController::class, 'library']);
 
@@ -63,4 +65,23 @@ Route::middleware('auth')->group(function() {
 
     // Update settings (to update the settings like password)
     Route::put('/settings/update', [UserController::class, 'updateSettings'])->name('settings.update');
+
+
+    Route::get('reservations', [ReservationController::class, 'index'])->name('reservations.index');
+
+    // Show form to create a new reservation
+    Route::get('reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
+
+    // Store a new reservation (post request)
+    Route::post('reservations', [ReservationController::class, 'store'])->name('reservations.store');
+
+    // Show the form to edit a reservation
+    Route::get('reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
+
+    // Update a reservation
+    Route::put('reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
+
+    // Delete a reservation
+    Route::delete('reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 });
+Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');

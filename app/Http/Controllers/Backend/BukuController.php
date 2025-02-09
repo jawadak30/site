@@ -19,7 +19,16 @@ class BukuController extends Controller
     public function index(): View
     {
         $categories = Categorie::select('id', 'name')->get();
-        $books = Livre::with('categorie:id,name')->latest()->paginate(10);
+        if (auth()->user()->isAdmin()) {
+            // Admin sees all books
+            $books = Livre::with('categorie:id,name')->latest()->paginate(10);
+        } else {
+            // Regular user sees only their reserved books
+            $books = Livre::whereHas('reservations', function ($query) {
+                $query->where('user_id', auth()->id());
+            })->with('categorie:id,name')->latest()->get();
+
+        }
         return view('backend.buku.buku', compact('books','categories'));
     }
 

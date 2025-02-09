@@ -58,12 +58,16 @@
                             <td>{{ $item->created_at }}</td> <!-- Created At (Date Added) -->
                             <td>
                                 <button type="button" class="btn btn-sm btn-outline-warning bx bx-info-circle" data-bs-toggle="modal" data-bs-target="#modalCenterShow{{ $item->id }}"></button>
+                                @if (auth()->user()->isAdmin())
                                 <button type="button" class="btn btn-sm btn-outline-success bx bx-edit-alt" data-bs-toggle="modal" data-bs-target="#modalCenterUpdateBook{{ $item->id }}"></button>
+                                @endif
                                 <button type="button" class="btn btn-sm btn-outline-danger bx bx-trash" data-bs-toggle="modal" data-bs-target="#modalCenterDeleteBook{{ $item->id }}"></button>
                             </td>
                         </tr>
                     @endforeach
+                    @if (auth()->user()->isAdmin())
                     {{ $books->links() }}
+                    @endif
                 </tbody>
             </table>
 

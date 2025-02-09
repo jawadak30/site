@@ -1,8 +1,8 @@
     <!-- Footer Start -->
     <div class="container-fluid bg-primary text-light footer wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-12 px-lg-12">
-            <div class="row g-5">
-                <div class="col-md-4 col-6 col-lg-3">
+            <div class="row g-5" style="display: flex; justify-content: center;">
+                {{-- <div class="col-md-4 col-6 col-lg-3">
                     <p class="section-title text-white h5 mb-4">Address<span></span></p>
                     <p><i class="fa fa-map-marker-alt me-3"></i>Lorem ipsum dolor, sit amet.</p>
                     <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
@@ -14,7 +14,7 @@
                         <a class="btn btn-outline-light btn-social" href=""><i
                                 class="fab fa-linkedin-in"></i></a>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-md-4 col-lg-3">
                     <p class="section-title text-white h5 mb-4">Quick Link<span></span></p>
                     <a class="btn btn-link" href="#home">Home</a>
@@ -22,21 +22,8 @@
                     <a class="btn btn-link" href="#inNumber">DLMS in Number</a>
                     <a class="btn btn-link" href="#Library">Library</a>
                 </div>
-                <div class="col-md-6 col-lg-3">
-                    <p class="section-title text-white h5 mb-4">Gallery<span></span></p>
-                    <div class="row g-2">
-                        {{-- @foreach ($img_footer as $item)
-                            <div class="col-4">
-                                <img class="img-fluid" src="{{ asset('storage/backend/' . $item->cover) }}"
-                                    alt="Image">
-                            </div>
-                        @endforeach --}}
-                    </div>
-                </div>
                 <div class="col-md-4 col-lg-3">
                     <p class="section-title text-white h5 mb-4">Newsletter<span></span></p>
-                    <p>Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit
-                        non vulpu</p>
                     <div class="position-relative w-100 mt-3">
                         <input class="form-control border-0 rounded-pill w-100 ps-4 pe-5" type="text"
                             placeholder="Your Email" style="height: 48px;">
@@ -48,12 +35,9 @@
         </div>
         <div class="container px-lg-5">
             <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">Ali Murtadho</a>, All Right Reserved.
-
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                <div class="row" style="display: flex; justify-content: center;">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0"  style="display: flex; justify-content: center;">
+                        &copy; <a class="border-bottom" href="#">chouaib el ghezzar</a>, All Right Reserved.
                     </div>
                 </div>
             </div>
